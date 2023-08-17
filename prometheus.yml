@@ -1,0 +1,13 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
+  - job_name: 'torchserve'
+    static_configs:
+    - targets: ['host.docker.internal:8082'] #TorchServe metrics endpoint
+    
+# docker run -p 9090:9090 -v `pwd`/prometheus.yml:/etc/prometheus/prometheus.yml --add-host=host.docker.internal:host-gateway prom/prometheus:v2.37.9
