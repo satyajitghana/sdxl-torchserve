@@ -35,3 +35,33 @@ docker run --rm --shm-size=1g \
 		-v /home/ubuntu/sdxl-torchserve/config.properties:/home/model-server/config.properties \
         --mount type=bind,source=/home/ubuntu/sdxl-torchserve,target=/tmp/models pytorch/torchserve:0.8.1-gpu torchserve --model-store=/tmp/models
 ```
+
+
+For batching modify `config.properties`
+
+```
+#Sample config.properties. In production config.properties at /mnt/models/config/config.properties will be used
+inference_address=http://0.0.0.0:8080
+management_address=http://0.0.0.0:8081
+metrics_address=http://0.0.0.0:8082
+enable_envvars_config=true
+install_py_dep_per_model=true
+load_models=sdxl.mar
+max_response_size=655350000
+model_store=/tmp/models
+default_response_timeout=600
+enable_metrics_api=true
+models={\
+  "sdxl": {\
+    "1.0": {\
+        "defaultVersion": true,\
+        "marName": "sdxl.mar",\
+        "minWorkers": 1,\
+        "maxWorkers": 1,\
+        "batchSize": 4,\
+        "maxBatchDelay": 1000,\
+        "responseTimeout": 120\
+    }\
+  }\
+}
+```
