@@ -60,7 +60,7 @@ models={\
         "maxWorkers": 1,\
         "batchSize": 4,\
         "maxBatchDelay": 1000,\
-        "responseTimeout": 120\
+        "responseTimeout": 600\
     }\
   }\
 }
